@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<title>Survey form</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="./style.css">
+	<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+	</head>
+		<h1 id="title">Survey Form</h1>
+		
+		<p id="description"><i>This survey form is made as an <a href="https://learn.freecodecamp.org/responsive-web-design/responsive-web-design-projects/build-a-survey-form">Free Code Camp</a> project</i></p>
+		
+		<main>
+			<form id = "survey-form">
+			
+			<div>
+			<label for="name" id="name-label">* Name:</label>
+			<br>
+			<input id="name" type="text" placeholder="Enter your name" required>
+			</div>
+			
+			<div>
+			<label for="email" id="email-label">* Email:</label>
+			<br>
+			<input id="email" type="email" placeholder="Enter your e-mail" required>
+			</div>
+			
+			<div>
+			<label for="numer" id="number-label">* Age:</label>
+			<br>
+			<input id="number" type="number" min="0" max="200" placeholder="18" required>
+			</div>
+			
+			<div>
+			<label for="dropdown" id="dropdown-label" value="--Choose--">Choose your favourite color:</label>
+			<br>
+			<select id="dropdown">
+			<option disabled selected hidden>-- Fovourite color --</option>
+			<option>Black</option>
+			<option>White</option>
+			<option>Red</option>
+			<option>Green</option>
+			<option>Yellow</option>
+			<option>Orange</option>
+			<option>Blue</option>
+			<option>Other</option>
+			</select>
+			</div>
+			
+			<div>
+			<fieldset>
+			<legend>Imagine "XI + I = X" is written on paper using roman numerals. Is the equation correct?</legend>
+			<input id="eq1" name="equation" type="radio" value="1">
+			<label for="eq1">Yes, you just need to change your perspective</label>
+			<br>
+			<input id="eq2" name="equation" type="radio" value="2">
+			<label for="eq2">No, that`s definetly not correct</label>
+			<br>
+			</fieldset>
+			</div>
+			
+			<div>
+			<fieldset>
+			<legend>What do you like to do in your free-time?</legend>
+			<input id="f1" name="free-time" type="checkbox" value="1">
+			<label for="f1">Programming</label>
+			<br>
+			<input id="f2" name="free-time" type="checkbox" value="2">
+			<label for="f2">Sports</label>
+			<br>
+			<input id="f3" name="free-time" type="checkbox" value="3">
+			<label for="f3">Reading</label>
+			<br>
+			<input id="f4" name="free-time" type="checkbox" value="4">
+			<label for="f4">Other (mention in comments)</label>
+			<br>
+			</fieldset>
+			</div>
+			
+			<div>
+			<label for="comments">How did you like the survey?</label>
+			<br>
+			<textarea id="comments" name="comments" placeholder="Your comments go here..."></textarea>
+			</div>
+			
+			<div id="button">
+			<button id="submit">Submit</button>
+			</div>
+			
+			</form>
+		</main>
+		
+		<footer id="footer">
+			<p><a href="https://github.com/Photon-LT">&copy; Paulius Gasiukevičius</a></p>
+		</footer>
+		
+	<body>
+	</body>
+</html>

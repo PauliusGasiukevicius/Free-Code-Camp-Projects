@@ -1,0 +1,286 @@
+#header
+{
+	position: fixed;
+	background-color: #FFFFFF;
+	height: auto;
+	border-color: orange;
+	border-width: 0.1em;
+	border-style: dashed;
+	width: 80%;
+	display: block;
+	margin: auto;
+	text-align: center;
+	left: 0;
+	right: 0;
+	top: 0;
+}
+
+body
+{
+	width:auto;
+}
+
+#ice-cream-img-div
+{
+	text-align: center;
+	display: block;
+	max-width: 100%;
+}
+
+#ice-cream-img
+{
+	display: block;
+	max-width: 100%;
+	margin: auto;
+}
+
+#flex-wrapper
+{
+	display: flex;
+	flex-flow: row wrap;
+}
+
+#header-img
+{
+	height: 4em;
+	display: flex;
+	flex: 0 1 auto;
+}
+
+header nav
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1 0 auto;
+}
+
+@media (max-width: 600px)
+{
+	#header
+	{
+		width: 100%;
+	}
+	
+	#header-img
+	{
+		height: 0;
+		display: block;
+		flex 0 1 auto;
+	}
+}
+
+.nav-link
+{
+	display: flex;
+	height: 4em;
+	padding: 0;
+	font-family: MonoSpace;
+	font-size: 1em;
+	font-style: bold;
+	font-weight: 800;
+	justify-content: space-around;
+	align-items: center;
+	flex: 1 1 auto;
+	background-color: orange;
+	border-width: 0.5em;
+	border-color: white;
+	border-style: solid;
+}
+
+#nav-bar a
+{
+	color: white;
+}
+
+#nav-bar a:hover
+{
+	color: red;
+}
+
+main
+{
+	margin-top: 5em; 
+}
+
+#video
+{
+	display: block;
+	margin: auto;
+	max-width: 100%;
+}
+
+#footer
+{
+	display: block;
+	height: 5em;
+	width: 80%;
+	border-style: dashed;
+	border-color: orange;
+	border-width: 0.1em;
+	margin: auto;
+	text-align: right;
+	padding: 0;
+	margin-top: 2em;
+	margin-bottom: 0;
+}
+
+#footer p
+{
+	padding: 5px;
+	margin: 0px;
+}
+
+#footer a
+{
+	color: black;
+}
+
+#footer a:hover
+{
+	color: green;
+}
+
+#subscribe
+{
+	text-align: center;
+	margin: auto;
+}
+
+#email
+{
+	width: 15em;
+	height: 1.5em;
+	margin: 0.5em;
+}
+
+#submit, .order-button
+{
+	margin: 0.5em;
+	height: 3em;
+	width: 9em;
+	font-family: MonoSpace;
+	font-weight: 700;
+	text-align: center;
+	background-color: orange;
+	color: white;
+}
+
+#submit:hover, .order-button:hover
+{
+	color: red;
+	font-weight: 900;
+}
+
+#why
+{
+	display: block;
+	margin: auto;
+	text-align: center;
+}
+
+.perks
+{
+	margin: 1em;
+	min-width: 60%;
+	font-family: MonoSpace;
+	font-weight: 700;
+	font-size: 1.3em;
+	
+	display: flex;
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+}
+
+.perks h2
+{
+	flex: 0.5 1;
+}
+
+.perks img
+{
+	height: 3em;
+	padding: 1em;
+	background-color: orange;
+	border-radius: 25%;
+	border-color: red;
+	border-width: 0.1em;
+	border-style: dashed;
+}
+
+#order
+{
+	margin-top: 5em;
+	display: flex;
+	max-width: 100%;
+	flex-direction: row;
+	justify-content: space-around;
+	text-align: center;
+}
+
+.order-item
+{
+	border: orange dashed 0.1em;
+	width: 20%;
+}
+
+.order-img
+{
+	height: 15em;
+	display: block;
+	margin: auto;
+	border: orange dashed 0.1em;
+}
+
+.order-item-header
+{
+	text-align: center;
+	font-family: MonoSpace;
+	background-color: orange;
+	color: white;
+	padding: 1em;
+	margin: 0;
+}
+
+.order-price
+{
+	font-family: MonoSpace;
+	font-size: 2em;
+	font-weight: 700;
+	color: orange;
+}
+
+.order-desc
+{
+	font-size: 1.25em;
+}
+
+.order-flavor
+{
+	margin: 0.5em;
+	width: 12.5em;
+	font-size: 1.05em;
+}
+
+@media (max-width: 600px)
+{
+	#order
+	{
+	display: block;
+	}
+	
+	.order-item
+	{
+		width: 100%;
+		margin-bottom: 5%;
+	}
+}
+
+.jump-target::before
+{
+	display: block;
+	height: 5em;
+	padding-top: -5em 0 0;
+	content: "";
+}

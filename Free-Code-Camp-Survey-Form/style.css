@@ -1,0 +1,119 @@
+body
+{
+	background-color: #66CCFF;
+}
+
+main
+{
+	margin-left: 5em;
+	margin-right: 5em;
+	background-color: white;
+}
+
+h1
+{
+	font-family: MonoSpace;
+}
+
+h1, #description
+{
+	text-align: center;
+}
+
+#description
+{
+	font-weight: 600;
+}
+
+#description a
+{
+	color: black;
+}
+
+#description a:hover
+{
+	color: green;
+}
+
+#survey-form
+{
+padding: 20px 20px 20px 20px;	
+}
+
+#survey-form div
+{
+	padding: 10px;
+	width: auto;
+}
+
+fieldset
+{
+	width: 95%;
+}
+
+textarea
+{
+	width: 98%;
+	resize: vertical;
+	height: 7em;
+}
+
+button
+{
+	background-color: #00CCFF;
+	border-radius: 10%;
+	width: 5em;
+	height: 3em;
+	font-weight: 600;
+	color: black;
+	
+}
+
+#button
+{
+	text-align: center;
+}
+
+button:hover
+{
+	background-color: #00AAFF;
+}
+
+#name, #email, #number, label, #dropdown
+{
+	padding: 5px;
+	width: 33%;
+}
+
+#footer
+{
+	margin: auto;
+	text-align: center;
+	color: white;
+	bottom: 0;
+	font-weight: 600;
+}
+
+#footer a
+{
+	color: black;
+}
+
+#footer a:hover
+{
+	text-shadow: 0em 0em 0.2em white;
+}
+
+@media (max-width: 600px)
+{
+	main
+	{
+		margin: 0;
+	}
+	
+	#name, #email, #number, label, #dropdown
+	{
+	padding: 5px;
+	width: 75%;
+	}
+}

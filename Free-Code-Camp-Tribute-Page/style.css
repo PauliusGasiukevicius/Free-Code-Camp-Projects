@@ -1,0 +1,92 @@
+body
+{
+	background-color: #FFFFFF;
+	color: #000000;
+	text-align: justify;
+}
+
+li 
+{
+	margin: 10px 10px 10px 10px;
+}
+
+li, p 
+{
+	margin-left: 1em;
+	margin-right: 1em;
+}
+
+#tribute-info a
+{
+	color: black;
+}
+
+#tribute-info a:hover
+{
+	color: #00cc00;
+}
+
+#title
+{
+	font-family: MonoSpace;
+}
+
+#title, #footer, h2, #quote, #about
+{
+	text-align: center;
+	color: #FFFFFF;
+	background-color: #0088cc;
+	width: auto;
+	margin: 0px 0px 0px 0px;
+}
+
+#quote
+{
+	border: 0px 0px 0px 0px;
+}
+
+#about a, #footer a
+{
+	color: #FFFFFF;
+}
+
+#about a:hover
+{
+	color: #00ffff;
+}
+
+#footer a:hover
+{
+	text-shadow: 0.01em 0.01em white;
+}
+
+#tribute-info
+{
+	text-align: center;
+	color: black;
+}
+
+#image-div
+{
+	width: auto;
+}
+
+#image
+{
+	display: block;
+	margin: auto;
+	max-width: 25%;
+	min-width: 5%;
+	width: auto;
+}
+
+#img-caption
+{
+	text-align: center;
+	font-style: italic;
+}
+
+#footer
+{
+	margin-bottom: 0;
+}

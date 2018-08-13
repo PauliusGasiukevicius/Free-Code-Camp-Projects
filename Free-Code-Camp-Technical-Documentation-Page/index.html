@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<title>Technical documentation page</title>
+	<link rel="stylesheet" href="./style.css">
+	<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+	</head>
+	
+	<body>
+		
+		<nav id="navbar">
+		<header>Sieve of Eratosthenes in C++</header>
+		<a class="nav-link" href="#Introduction">Introduction</a>
+		<a class="nav-link" href="#Classical_sieve">Classical sieve</a>
+		<a class="nav-link" href="#Fast_Exponentation">Fast Exponentation</a>
+		<a class="nav-link" href="#Segmented_sieve">Segmented sieve</a>
+		<a class="nav-link" href="#Divisor_Count">Divisor Count</a>
+		<a class="nav-link" href="#Eulers_Totient_Function">Eulers Totient Function</a>
+		<a class="nav-links" href="#footer">About</a>
+		</nav>
+	
+		<main id="main-doc">
+		<section class="main-section" id="Introduction">
+		<header>Introduction</header>
+		<p>In mathematics, the sieve of Eratosthenes is a simple, ancient algorithm for finding all prime numbers up to any given limit.
+		<br>
+		It does so by iteratively marking as composite (i.e., not prime) the multiples of each prime,
+		starting with the first prime number, 2. 
+		The multiples of a given prime are generated as a sequence of numbers starting from that prime,
+		with constant difference between them that is equal to that prime.
+		This is the sieve's key distinction from using trial division to sequentially test each candidate number
+		for divisibility by each prime.
+		</p>
+		<img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Sieve_of_Eratosthenes_animation.gif">
+		</section>
+		
+		<section class="main-section" id="Classical_sieve">
+		<header>Classical sieve</header>
+		<p>Classical sieve is just an implementation of above mentioned algorithm.</p>
+		<code>
+		<script src="https://gist.github.com/Photon-LT/8540e307671032cd066708111a6bfb8d.js"></script>
+		</code>
+		<p>Benefits:</p>
+			<ul>
+				<li>Easily generate all primes up to ~10^7 (or more if your memory allows so)</li>
+				<li>Have a look-up table to check if a number in interval [2, N] is a prime</li>
+			</ul>
+		</section>
+		
+		<section class="main-section" id="Fast_Exponentation">
+		<header>Fast Exponentation</header>
+		<p>Why we ussually need prime factors? Well it can be many things and exponentation is one of them.
+		If we have array of primes up to &radic;N we can simply iterate over them to factorize any number up to N,
+		Doing so we must check all primes up to &radic;N and it can be highly inefficient for larger numbers.
+		<br>
+		If we change our look-up table to show <b>smallest prime factor</b> instead of whether a number is prime or not,
+		we can avoid looping throught all primes, and loop only throught primes that are actual factors of our number.
+		</p>
+		
+		<code>
+		<script src="https://gist.github.com/Photon-LT/4521dfee5889c9a926dfb6e00ae52b25.js"></script>
+		</code>
+		
+		<p>
+		Benefits:
+		</p>
+		<ul>
+			<li>Easily generate all primes up to ~10^7 (or more if your memory allows so)</li>
+			<li>Have a look-up table to check if a number in interval [2, N] is a prime</li>
+			<li>Factorize any number in interval [2,N] in O(#countOfFactors)</li>
+		</ul>
+		
+		</section>
+		
+		<section class="main-section" id="Segmented_sieve">
+		<header>Segmented sieve</header>
+		<p>So we know how to generate all primes in interval as large as our Memory can hold,
+		but our memory could hold primes only (no look-up table) of much larger intervals, 
+		for example there`s 50847534 primes below 1 billion which can still fit in memory of average PC yet look-up table of
+		1 billion can`t.
+		<br>
+		To actually find all primes our memory can hold we need to construct so called "Segmented" sieve.
+		The main idea to find all primes in interval [2,N] where N can be as high as we want (10^9 already takes ~2 minutes on average CPU),
+		is to first find all primes up to &radic;N and then divide our large interval into smaller chunks that can fit into memory.
+		Then in every chunk we can use sieve to mark multiples of each prime, and add remaining unmarked numbers to our prime array.
+		</p>
+		
+		<code>
+		<script src="https://gist.github.com/Photon-LT/5b432742ab9f729a1e9ad0d2c40d6611.js"></script>
+		</code>
+		
+		<p>Benefits:</p>
+		<ul>
+			<li>Finding all primes on large intervals [2,N] (~10^9 on average CPU)</li>
+		</ul>
+		</section>
+		
+		<section class="main-section" id="Divisor_Count">
+		<header>Divisor Count</header>
+		<p>Sometimes we are not interested in primes themself but prime-related stuff like how many divisors a number has?
+		We can also use sieve modification to efficiently solve this</p>
+		
+		<code>
+		<script src="https://gist.github.com/Photon-LT/40f8da7b1e7e55dfc752ba629a584c26.js"></script>
+		</code>
+		
+		<p>Benefits:</p>
+		<ul>
+			<li>Finding how much divisors any number in interval [2,N] has efficiently</li>
+		</ul>
+		</section>
+		
+		<section class="main-section" id="Eulers_Totient_Function">
+		<header>Eulers Totient Function</header>
+		<p>Eulers Totient Function, called phi(x) calculates how many number are there in interval [1,x],
+		such that their Greatest Common Divisor is 1. For single values for x there`s lots of formulas involving prime factors
+		but what if we wanted to efficiently find all values of phi(x) in interval [1,N]?
+		<br>
+		Once again we can use modified sieve to find this.
+		</p>
+		
+		<code>
+		<script src="https://gist.github.com/Photon-LT/383abbb8a35f87838fca88b17eaa021a.js"></script>
+		</code>
+		
+		<p>Benefits:</p>
+		<ul>
+		<li>Finding all values of Euler`s Totient Function in interval [1,N] efficiently</li>
+		</ul>
+		
+		</section>
+		
+		</main>
+		
+		<footer id="footer">
+		<p><a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">Reference</a></p>
+		<p><a href="https://github.com/Photon-LT">&copy; Paulius Gasiukevičius</a></p>
+		</footer>
+		
+	</body>
+</html>
