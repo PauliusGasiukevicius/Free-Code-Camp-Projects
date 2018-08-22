@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Random Quote Machine</title>
+		<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+		<link rel="stylesheet" href="./style.css">
+		<script src="./code.js"></script>
+	</head>
+	
+	<body onload="newQuote()">
+			<div id="quote-box" class="container-fluid bg-primary align-items-center justify-content-center">
+				<div class="card align-items-center justify-content-center">
+					<div class="card-body">
+						<p id="text">Be yourself; everyone else is already taken.</p>
+						<p id="author">- Oscar Wilde</p>
+							<div id="buttons">
+								<a href="https://twitter.com/intent/tweet" target="_blank" id="tweet-quote" role="button" class="btn btn-primary"><i class="fab fa-twitter"></i></a>
+								<button id="new-quote" onClick="newQuote()" class="btn btn-primary float-right">New Quote</button>
+							</div>
+					</div>
+				</div>
+			</div>
+	</body>
+	
+</html>
