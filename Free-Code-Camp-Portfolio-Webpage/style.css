@@ -85,6 +85,8 @@ body
 
 .skill-logo-img
 {
+	display: flex;
+	align-self: center;
 	width: 13%;
 	height: auto;
 }
