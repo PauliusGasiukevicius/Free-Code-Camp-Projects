@@ -1,0 +1,25 @@
+{
+  "name": "Free-Coce-Camp-Projects",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Photon-LT/Free-Coce-Camp-Projects.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Photon-LT/Free-Coce-Camp-Projects/issues"
+  },
+  "homepage": "https://github.com/Photon-LT/Free-Coce-Camp-Projects#readme",
+  "dependencies": {
+    "express": "^4.17.0",
+    "path": "^0.12.7"
+  }
+}
