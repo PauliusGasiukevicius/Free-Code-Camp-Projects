@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<title>Bar chart</title>
+		<meta charset="UTF8">
+		<script src='https://d3js.org/d3.v4.min.js'></script>
+		<style>
+			body
+			{
+				margin: 0;
+				padding: 1em;
+				text-align: center;
+			}
+			svg
+			{
+				background-color: whitesmoke;
+			}
+
+			#tooltip
+			{
+				background-color: white;
+				border: red solid 1em 100%;
+				border-radius: 1em;
+				padding: 1em;
+				visibility: hidden;
+				position: absolute;
+				-webkit-box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.8);
+				-moz-box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.8);
+				box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.8);
+				opacity: 0.9;
+				z-index: 10;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div>
+			<h1 id="title">Doping in Professional Bicycle Racing<br>35 Fastest times up Alpe d'Huez</h1>
+			<svg>
+			</svg>
+		</div>
+		<ul></ul>
+	</body>
+	
+	<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+	<script>
+
+		const getSeconds = (tm) =>
+		{
+			let mm = parseInt(tm.slice(0,2));
+			let ss = parseInt(tm.slice(3,5));
+
+			return ss + mm*60;
+		}
+		const h = 400;
+		const w = 900;
+		const padding = 10;
+		
+		fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json')
+		.then(res => res.json())
+		.then((json) => {
+			const data = json;
+			console.log(data);
+
+			const minYear = d3.min(data, (d => parseInt(d.Year)));
+			const maxYear = d3.max(data, (d => parseInt(d.Year)));
+			const minTime = d3.min(data, (d => new Date(1000*getSeconds(d.Time))));
+			const maxTime = d3.max(data, (d => new Date(1000*getSeconds(d.Time))));
+
+			const xScale = d3.scaleLinear()
+					.domain([minYear-1,maxYear+1])
+                    .range([0,w]);
+			
+			const yScale = d3.scaleLinear()
+					.domain([minTime,maxTime])
+					.range([0,h]);
+
+			const xAxis = d3.axisBottom().scale(xScale).tickFormat(d3.format("d"));
+			const yAxis = d3.axisLeft().scale(yScale).tickFormat(d3.timeFormat("%M:%S"));
+			const svg = d3.select('svg');
+
+			const tooltip = d3.select("body")
+			.append("div")
+			.attr("id", "tooltip")
+			.text("a simple tooltip");
+
+			svg.attr("height", h + 4*padding)
+			.attr("width", w + 4*padding)
+			.selectAll('circle')
+			.data(data)
+			.enter()
+			.append('circle')
+			.attr("cx", (d => 6*padding + xScale(parseInt(d.Year))))
+			.attr("cy", (d => padding + yScale(new Date(1000*getSeconds(d.Time)))))
+			.attr("r", padding)
+			.attr("data-xvalue", d => parseInt(d.Year))
+			.attr("data-yvalue", d => new Date(1000*getSeconds(d.Time)))
+			.attr("class", "dot")
+			.style("fill", d=>(d.Doping ? "#00afff" : "#ffa600"))
+			.attr("stroke", "red")
+			.on("mouseout", d => tooltip.style("visibility","hidden"))
+			.on("mouseover", d => {
+				tooltip.style("visibility", "visible")
+				.attr("data-year", d.Year)
+				.html(d.Name + ", " + d.Nationality + "<br>" + d.Time + ", " + d.Year + " <br><br>" +d.Doping);
+			})
+			.on("mousemove", d => {
+				tooltip.style("top", event.pageY + "px");
+				tooltip.style("left", (event.pageX + padding) + "px");
+				})
+
+			
+			svg.append('g')
+			.attr("id","x-axis")
+			.attr("transform", "translate(" + 6*padding +", " + (h+padding) + ")")
+			.call(xAxis);
+
+			svg.append('g')
+			.attr("id","y-axis")
+			.attr("transform", "translate(" + 6*padding +", " + (padding) + ")")
+			.call(yAxis);
+
+			let legendData = [{text: "No doping allegations", color: "#ffa600"},{text: "Riders with doping allegations", color: "#00afff"}];
+			
+			let legend = svg.append("g")
+			.attr("class", "legend")
+			.attr("id", "legend")
+			.attr("x", w - 200)
+			.attr("y", 30)
+			.attr("height", 100)
+			.attr("width", 100);
+			
+			legend.selectAll('rect')
+			.data(legendData)
+			.enter()
+			.append("rect")
+			.attr("x", w - 200)
+			.attr("y", (d,i) => 25*(i+1))
+			.attr("width", 10)
+			.attr("height", 10)
+			.style("fill", d => d.color);
+			
+			legend.selectAll('text')
+			.data(legendData)
+			.enter()
+			.append("text")
+			.attr("x", w - 185)
+			.attr("y", (d,i) => 25*(i+1) + 10)
+			.text(d => d.text);
+
+		});
+	</script>
+	
+</html>
