@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<title>Choropleth map</title>
+		<meta charset="UTF8">
+		<script src='https://d3js.org/d3.v4.min.js'></script>
+		<script src="https://d3js.org/topojson.v2.min.js"></script>
+		<style>
+			body
+			{
+				margin: 0;
+				padding: 1em;
+				text-align: center;
+			}
+			svg
+			{
+				background-color: whitesmoke;
+			}
+
+			.county:hover
+			{
+				stroke: black;
+			}
+
+
+			#tooltip
+			{
+				background-color: white;
+				border: red solid 1em 100%;
+				border-radius: 1em;
+				padding: 0.25em;
+				visibility: hidden;
+				position: absolute;
+				opacity: 0.75;
+				z-index: 10;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div>
+			<h1 id="title">United States Educational Attainment</h1>
+			<svg>
+			</svg>
+		</div>
+		<ul></ul>
+	</body>
+	
+	<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+	<script>
+
+		const h = 600;
+		const w = 900;
+		const padding = 10;
+		
+		fetch('https://raw.githubusercontent.com/no-stack-dub-sack/testable-projects-fcc/master/src/data/choropleth_map/counties.json')
+		.then(res => res.json())
+		.then((json) => {
+		fetch('https://raw.githubusercontent.com/no-stack-dub-sack/testable-projects-fcc/master/src/data/choropleth_map/for_user_education.json')
+		.then(res => res.json())
+		.then(data2 => {
+			const data = json;
+			console.log(data2);
+
+			d3.select('h1')
+			.append('p')
+			.attr("id","description")
+			.text("Percentage of adults age 25 and older with a bachelor's degree or higher (2010-2014)")
+			.style("font-size", "0.6em");
+
+			const svg = d3.select('svg');
+
+			const minBachelors = d3.min(data2,(d => d.bachelorsOrHigher));
+			const maxBachelors = d3.max(data2,(d => d.bachelorsOrHigher));
+
+			const colors = d3.scaleLinear()
+			.domain([minBachelors, maxBachelors])
+			.range(["white", "orange"]);
+
+			const tooltip = d3.select("body")
+			.append("div")
+			.attr("id", "tooltip");
+			
+			svg.attr("height", h + 4*padding)
+			.attr("width", w + 4*padding);
+
+			svg.append("g")
+			.attr("class", "counties")
+			.selectAll("path")
+			.data(topojson.feature(data, data.objects.counties).features)
+			.enter()
+			.append("path")
+			.attr("class", "county")
+			.attr("d", d3.geoPath())
+			.attr("data-fips", d => d.id)
+			.attr("data-education", d => data2.filter(x => x.fips === d.id)[0].bachelorsOrHigher)
+			.style("fill", (d,i) => colors(data2.filter(x => x.fips === d.id)[0].bachelorsOrHigher))
+			.on("mouseout", d => tooltip.style("visibility","hidden"))
+			.on("mouseover", d => {
+				let edu = data2.filter(x => x.fips === d.id)[0];
+				tooltip.style("visibility", "visible")
+				.attr("data-education", edu.bachelorsOrHigher)
+				.html(edu.area_name + " " + edu.state + " " + edu.bachelorsOrHigher + "%");
+			})
+			.on("mousemove", d => {
+				tooltip.style("top", event.pageY + "px");
+				tooltip.style("left", (event.pageX + padding) + "px");
+				})
+			
+			
+			let intervals = 5;
+			let legendText = [0,20,40,60,80,100];
+
+			let legend = 
+			svg.append('g')
+			.attr("class", "legend")
+			.attr("id", "legend")
+			.attr("x", 0)
+			.attr("y", 0)
+			.attr("height", 40)
+			.attr("width", 800);
+			
+			legend.selectAll('rect')
+			.data(legendText)
+			.enter()
+			.append("rect")
+			.attr("x", (d,i) => 300 + 80*i)
+			.attr("y", (d,i) => 10)
+			.attr("width", 79)
+			.attr("height", 20)
+			.style("fill", (d,i)=>colors(minBachelors + (maxBachelors-minBachelors)*d*0.01))
+			
+			legend.selectAll('text')
+			.data(legendText)
+			.enter()
+			.append("text")
+			.attr("x", (d,i) => 302 + 80*i)
+			.attr("y", (d,i) => 25)
+			.text(d => "≤ " + (minBachelors + (maxBachelors-minBachelors)*d*0.01).toFixed(2) + "%");
+
+
+		})});
+	</script>
+	
+</html>
