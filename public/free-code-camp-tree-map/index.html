@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<title>Tree map</title>
+		<meta charset="UTF8">
+		<script src='https://d3js.org/d3.v4.min.js'></script>
+		<script src="https://d3js.org/topojson.v2.min.js"></script>
+		<style>
+			body
+			{
+				margin: 0;
+				padding: 1em;
+				text-align: center;
+			}
+			svg
+			{
+				background-color: whitesmoke;
+			}
+
+			#legend
+			{
+				background-color: white;
+			}
+
+			.county:hover
+			{
+				stroke: black;
+			}
+
+
+			#tooltip
+			{
+				background-color: white;
+				border: red solid 1em 100%;
+				border-radius: 1em;
+				padding: 0.25em;
+				visibility: hidden;
+				position: absolute;
+				opacity: 0.75;
+				z-index: 10;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div>
+			<h1 id="title">Video Game Sales</h1>
+			<svg>
+			</svg>
+		</div>
+		<ul></ul>
+	</body>
+	
+	<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+	<script>
+
+		const h = 800;
+		const w = 1000;
+		const padding = 10;
+		
+		fetch('https://cdn.rawgit.com/freeCodeCamp/testable-projects-fcc/a80ce8f9/src/data/tree_map/video-game-sales-data.json')
+		.then(res => res.json())
+		.then((json) => {
+			const data = json;
+			console.log(data);
+
+			d3.select('h1')
+			.append('p')
+			.attr("id","description")
+			.text("Top 100 Most Sold Video Games Grouped by Platform")
+			.style("font-size", "0.6em");
+
+			const svg = d3.select('svg');
+
+			let root = d3.hierarchy(data);
+
+			let treemap = d3.treemap()
+			.size([w, h])
+			.padding(0.9);
+
+			let nodes = treemap(root
+			.sum(function(d) { return d.value; })
+			.sort(function(a, b) { return b.height - a.height || b.value - a.value; }))
+			.descendants();
+
+			let mn = d3.min(root.leaves(), d=>d.data.category);
+			let mx = d3.max(root.leaves(), d=>d.data.category);
+
+			let colors = d3.scaleOrdinal(d3.schemeCategory20);
+
+			const tooltip = d3.select("body")
+			.append("div")
+			.attr("id", "tooltip");
+			
+			svg.attr("height", h)
+			.attr("width", w);
+
+			svg.selectAll("tile")
+			.data(root.leaves())
+			.enter()
+			.append("rect")
+			.attr("class", "tile")
+			.attr("width", d => d.x1-d.x0)
+			.attr("height", d => d.y1-d.y0)
+			.attr("x", d => d.x0)
+			.attr("y", d => d.y0)
+			.attr("data-name", d => d.data.name)
+			.attr("data-category", d => d.data.category)
+			.attr("data-value", d => d.data.value)
+			.attr("fill", d => colors(d.data.category))
+			.on("mouseout", d => tooltip.style("visibility","hidden"))
+			.on("mouseover", d => {
+				tooltip.style("visibility", "visible")
+				.attr("data-value", d.data.value)
+				.html(d.data.name + "<br>" + d.data.category + "<br>" + d.data.value);
+			})
+			.on("mousemove", d => {
+				tooltip.style("top", event.pageY + "px");
+				tooltip.style("left", (event.pageX + padding) + "px");
+				});
+			
+			svg.selectAll("g")
+			.data(root.leaves())
+			.enter()
+			.append("g")
+			.attr("transform", d =>  "translate(" + d.x0 + "," + d.y0 + ")")
+			.append("text")
+			.attr("class", "tile-desc")
+			.selectAll('tspan')
+			.data(d => d.data.name.split(/[\s-]/g))
+			.enter()
+			.append('tspan')
+			.text(d => d)
+			.style("cursor", "default")
+			.style("font-size", "0.6em")
+			.attr("y", (d,i) => (i+1)*8)
+			.attr("x", (d,i) => 10)
+
+			d3.select("body")
+			.append("svg")
+			.attr("id", "legend")
+			.attr("width", 300)
+			.attr("heigth", 400)
+			.selectAll('rect')
+			.data(d3.map(root.leaves(), d => {return d.data.category;}).keys())
+			.enter()
+			.append("rect")
+			.attr("class", "legend-item")
+			.attr("fill", d => colors(d))
+			.attr("width", padding)
+			.attr("height", padding)
+			.attr("x", (d,i) => i < 6 ? 0 : i < 12 ? 100 : 200)
+			.attr("y", (d,i) => (i%6 + 1)*20)
+			.append("text")
+			.text(d=>d)
+
+			d3.select('#legend')
+			.selectAll('legend-text')
+			.data(d3.map(root.leaves(), d => {return d.data.category;}).keys())
+			.enter()
+			.append("text")
+			.attr("class", "legend-text")
+			.attr("x", (d,i) => i < 6 ? 20 : i < 12 ? 120 : 220)
+			.attr("y", (d,i) => 10 + (i%6 + 1)*20)
+			.text(d => d+" ")
+			.style("cursor", "default")
+		});
+	</script>
+	
+</html>
