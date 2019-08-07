@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Photon-LT/Free-Coce-Camp-Projects.git"
+    "url": "git+https://github.com/PauliusGasiukevicius/Free-Coce-Camp-Projects.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Photon-LT/Free-Coce-Camp-Projects/issues"
+    "url": "https://github.com/PauliusGasiukevicius/Free-Coce-Camp-Projects/issues"
   },
-  "homepage": "https://github.com/Photon-LT/Free-Coce-Camp-Projects#readme",
+  "homepage": "https://github.com/PauliusGasiukevicius/Free-Coce-Camp-Projects#readme",
   "dependencies": {
     "express": "^4.17.0",
     "path": "^0.12.7"
