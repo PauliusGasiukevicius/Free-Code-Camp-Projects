@@ -4,10 +4,12 @@ const cors = require('cors');
 const dns = require('dns');
 const app = express();
 const path = require('path');
+const fileUpload = require('express-fileupload');
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload({limits: { fileSize: 50 * 1024 * 1024 },}));
 app.use(cors());
 
 app. get('/', (req,res) => {res.send(path.join(__dirname, '..', 'public', 'index.html'));});
@@ -27,6 +29,11 @@ app.get("/api/whoami", (req,res) => {
     res.send({"ipaddress": req.headers['x-forwarded-for'], 
               "language": req.headers['accept-language'], 
               "software": req.headers['user-agent']});
+});
+
+app.post("/api/fileanalyse", (req, res) => {
+    const file = req.files.upfile;
+    res.send({name: file.name, type: file.mimetype, size: file.size});
 });
 
 app.listen(process.env.PORT || 3000);
