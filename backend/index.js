@@ -33,4 +33,5 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
     require('./shorturl.js')(app, mongoose);
     require('./exerciseTracker.js')(app, mongoose);
+    require('./issueTracker.js')(app,mongoose);
 });
