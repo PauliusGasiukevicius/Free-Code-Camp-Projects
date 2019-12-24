@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload({limits: { fileSize: 50 * 1024 * 1024 },}));
 app.use(helmet.noSniff());
 app.use(helmet.xssFilter());
+app.use(helmet.noCache());
+app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }));
 app.use(cors({origin: '*'}));
 
 //Non-DB routes
@@ -34,4 +36,5 @@ db.once('open', function() {
     require('./shorturl.js')(app, mongoose);
     require('./exerciseTracker.js')(app, mongoose);
     require('./issueTracker.js')(app,mongoose);
+    require('./personalLibrary.js')(app,mongoose);
 });
