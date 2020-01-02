@@ -30,6 +30,7 @@
     "mogodb": "0.0.1-security",
     "mongodb": "^3.4.0",
     "mongoose": "^5.8.0",
+    "node-fetch": "^2.6.0",
     "path": "^0.12.7"
   },
   "engines": {

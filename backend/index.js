@@ -16,6 +16,9 @@ app.use(helmet.xssFilter());
 app.use(helmet.noCache());
 app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }));
 app.use(cors({origin: '*'}));
+app.use(helmet.contentSecurityPolicy({
+    directives: {defaultSrc: ["'self'"], 
+    styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com']}}))
 
 //Non-DB routes
 app.get('/', (req,res) => {res.send(path.join(__dirname, '..', 'public', 'index.html'));});
@@ -37,4 +40,5 @@ db.once('open', function() {
     require('./exerciseTracker.js')(app, mongoose);
     require('./issueTracker.js')(app,mongoose);
     require('./personalLibrary.js')(app,mongoose);
+    require('./stockPriceChecker.js')(app,mongoose);
 });
