@@ -12,13 +12,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload({limits: { fileSize: 50 * 1024 * 1024 },}));
 app.use(helmet.noSniff());
+app.use(helmet.frameguard({ action: 'sameorigin' }))
 app.use(helmet.xssFilter());
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }))
 app.use(helmet.noCache());
 app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }));
+app.use(helmet.dnsPrefetchControl())
 app.use(cors({origin: '*'}));
 app.use(helmet.contentSecurityPolicy({
     directives: {defaultSrc: ["'self'"], 
-    styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com']}}))
+    scriptSrc: ["'self'", "'unsafe-inline'", 'https://code.jquery.com/jquery-2.2.1.min.js'],
+    sandbox: ['allow-forms', 'allow-scripts'],
+    styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com', "'unsafe-inline'"]}}))
 
 //Non-DB routes
 app.get('/', (req,res) => {res.send(path.join(__dirname, '..', 'public', 'index.html'));});
@@ -41,4 +46,5 @@ db.once('open', function() {
     require('./issueTracker.js')(app,mongoose);
     require('./personalLibrary.js')(app,mongoose);
     require('./stockPriceChecker.js')(app,mongoose);
+    require('./anonymousMessageBoard.js')(app,mongoose);
 });
