@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+
+<html class="h-100">
+	<head>
+		<meta charset="utf-8">
+		<title>Show the local weather</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        <link rel="stylesheet" href='./style.css'/>
+	</head>
+	
+	<body class="h-100">
+        <div class="container-fluid bg-primary h-100 d-flex justify-content-center align-content-center">
+            <div class="card h-50 justify-content-center align-self-center w-50 align-content-center">
+                <div class="card-body text-center align-self-center">
+                    <h2 id="weather" class="text-center"></h2>
+                    <h2 id="degree" class="text-center"></h2>
+                    <h2 id="sky" class="text-center"></h2>
+                    <i id="cloud" class="fa fa-cloud fa-5x text-center d-b"></i>
+                </div>
+            </div>
+        </div>
+    </body>
+    
+    <script >
+        navigator.geolocation.getCurrentPosition((pos) => {
+            console.log(pos);
+            fetch(`https://fcc-weather-api.glitch.me/api/current?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`)
+            .then(resp => resp.json())
+            .then(r => {
+                console.log(r);
+                document.getElementById('weather').textContent = r.name;
+                document.getElementById('degree').textContent = r.main.feels_like + " °C";
+                let celcius = true;
+
+                document.getElementById('degree').addEventListener("click", () => {
+                    if(celcius)
+                    {
+                        celcius = false;
+                        document.getElementById('degree').textContent = r.main.feels_like*9/5 + 32 + " °F";
+                    }
+                    else
+                    {
+                        celcius = true;
+                        document.getElementById('degree').textContent = r.main.feels_like + " °C";
+                    }
+                }); 
+
+                document.getElementById('sky').textContent = r.weather[0].description;
+                document.getElementById('cloud').classList.toggle('fa-cloud');
+
+                if(r.weather[0].description.includes('rain'))
+                document.getElementById('cloud').classList.toggle('fa-cloud-rain');
+                else if(r.weather[0].description.includes('snow'))
+                document.getElementById('cloud').classList.toggle('fa-snowflake');
+                else if(r.weather[0].description.includes('sun') && r.weather[0].description.includes('cloud'))
+                document.getElementById('cloud').classList.toggle('fa-cloud-sun');
+                else if(r.weather[0].description.includes('sun'))
+                document.getElementById('cloud').classList.toggle('fa-sun');
+                else if(r.weather[0].description.includes('thunder') || r.weather[0].description.includes('storm'))
+                document.getElementById('cloud').classList.toggle('fa-bolt');
+                else
+                document.getElementById('cloud').classList.toggle('fa-cloud');
+            })
+        });
+    </script>
+	
+</html>
