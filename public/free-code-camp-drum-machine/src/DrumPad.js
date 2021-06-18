@@ -17,7 +17,7 @@ class DrumPad extends Component
         const {letter} = this.props;
 
         document.addEventListener("keydown", (event) => {
-            if(String.toUpperCase(event.key) === letter)
+            if(`${event.key}`.toUpperCase() === letter)
                     this.click();
         });
     }
